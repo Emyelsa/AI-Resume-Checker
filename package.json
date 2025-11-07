@@ -7,14 +7,29 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@xenova/transformers": "^2.17.2",
+    "axios": "^1.13.1",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "firebase": "^12.5.0",
+    "form-data": "^4.0.4",
+    "js-levenshtein": "^1.1.6",
+    "lucide-react": "^0.548.0",
+    "mammoth": "^1.11.0",
+    "multer": "^2.0.2",
+    "multiparty": "^4.2.3",
+    "pdf-parse": "^1.1.4",
+    "pdf-poppler": "^0.2.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-hot-toast": "^2.6.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "vercel-build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -35,5 +50,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.18"
   }
 }
