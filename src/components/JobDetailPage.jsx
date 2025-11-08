@@ -19,7 +19,7 @@ import {
 } from "../firebase/firestoreService";
 import {
   fetchResumeAsFile,
-  getResumesByJobId,
+  getAllResumesFromRoot,
 } from "../firebase/storageService";
 import { createActivityLog } from "../firebase/firestoreService";
 import toast, { Toaster } from "react-hot-toast";
@@ -271,7 +271,7 @@ const JobDetailPage = ({
       // Final summary toast
       if (successCount > 0) {
         toast.success(
-          `🎉 Complete! ${successCount} resumes processed successfully!`,
+          `Complete! ${successCount} resumes processed successfully!`,
           {
             duration: 4000,
           }
@@ -303,10 +303,10 @@ const JobDetailPage = ({
 
     try {
       // Get all resume files for this job from Firebase Storage
-      const resumeFiles = await getResumesByJobId(selectedJob.id);
+      const resumeFiles = await getAllResumesFromRoot();
 
       if (resumeFiles.length === 0) {
-        toast("ℹ️ No resumes found in Firebase Storage for this job.");
+        toast("No resumes found in Firebase Storage for this job.");
         setIsProcessing(false);
         setUploadProgress("");
         return;
@@ -420,7 +420,7 @@ const JobDetailPage = ({
     }
   };
 
-  // Re-evaluate top candidates (NO CHANGES)
+  // Re-evaluate top candidates 
   const reevaluateTopCandidates = async () => {
     const topCands =
       filter === "top10"

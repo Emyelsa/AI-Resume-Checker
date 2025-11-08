@@ -53,10 +53,44 @@ export const getResumesByJobId = async (jobId) => {
   }
 };
 
+// Get all resume files from root level of Firebase Storage
+export const getAllResumesFromRoot = async () => {
+  try {
+    const listRef = ref(storage, '/'); // Root level reference
+    const result = await listAll(listRef);
+    
+    // Filter only resume formats
+    const resumeItems = result.items.filter(item => 
+      item.name.endsWith('.pdf') || 
+      item.name.endsWith('.docx') || 
+      item.name.endsWith('.doc')
+    );
+    
+    const urlPromises = resumeItems.map(itemRef => 
+      getDownloadURL(itemRef).then(url => ({
+        name: itemRef.name,
+        url: url,
+        path: itemRef.fullPath
+      }))
+    );
+    
+    return await Promise.all(urlPromises);
+  } catch (error) {
+    console.error('Error fetching resumes from root:', error);
+    return [];
+  }
+};
+
 // Fetch and convert resume file to text for AI processing
 export const fetchResumeAsFile = async (url, fileName) => {
   try {
-    const response = await fetch(url);
+    // Fetch through backend to avoid CORS
+    const response = await fetch(`/api/fetchResume?url=${encodeURIComponent(url)}`);
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch resume: ${response.statusText}`);
+    }
+    
     const blob = await response.blob();
     return new File([blob], fileName, { type: blob.type });
   } catch (error) {
